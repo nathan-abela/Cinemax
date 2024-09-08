@@ -1,5 +1,6 @@
 import { makeStyles } from '@mui/styles';
 
+// Define and export custom styles for components using Material-UI
 export default makeStyles(() => ({
   root: {
     display: 'flex',
