@@ -3,8 +3,10 @@ import ReactDOM from 'react-dom/client';
 
 import { BrowserRouter } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Provider } from 'react-redux';
 
 import App from './components/App';
+import store from './app/store';
 
 // Retrieve the root element from '/public/index.html'
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -13,9 +15,11 @@ const theme = createTheme({});
 // Render the App component wrapped with ThemeProvider for MUI theming
 // BrowserRouter is wrapped within ThemeProvider to allow access to theme
 root.render(
-  <ThemeProvider theme={theme}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </ThemeProvider>,
+  <Provider store={store}>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </ThemeProvider>
+  </Provider>,
 );
