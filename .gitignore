@@ -43,3 +43,10 @@ venv.bak/
 **/*.back.*
 *.thumb
 *.sketch
+
+# Design Files
+*.ai
+*.ait
+*.eps
+*.psd
+*.psb
