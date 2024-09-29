@@ -5,6 +5,10 @@ import { useTheme } from '@mui/styles';
 
 import useStyles from './styles';
 
+// Logos for light and dark themes
+import lightLogo from '../../assets/Cinemax_Logo_Blue.svg';
+import darkLogo from '../../assets/Cinemax_Logo_Red.svg';
+
 // Mock data for categories and genres
 const mockCategories = [
   { label: 'Popular', value: 'popular' },
@@ -18,10 +22,6 @@ const mockGenres = [
   { label: 'Horror', value: 'horror' },
   { label: 'Animation', value: 'animation' },
 ];
-
-// Logos for light and dark themes
-const lightLogo = ''; // TODO: Add light mode logo
-const darkLogo = ''; // TODO: Add dark mode logo
 
 function Sidebar({ setMobileOpen }) {
   const theme = useTheme(); // Get current theme (dark/ light mode)
