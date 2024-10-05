@@ -29,12 +29,12 @@ function Sidebar({ setMobileOpen }) {
 
   return (
     <>
-      {/* CineMax Logo - Changes based on the theme */}
+      {/* Cinemax Logo - Changes based on the theme */}
       <Link to="/" className={classes.imageLink}>
         <img
           className={classes.image}
           src={theme.palette.mode === 'light' ? lightLogo : darkLogo}
-          alt="CineMax Logo"
+          alt="Cinemax Logo"
         />
       </Link>
 
