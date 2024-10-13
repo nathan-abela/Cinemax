@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Box, CircularProgress, Divider, List, ListItem, ListItemIcon, ListItemText, ListSubheader } from '@mui/material';
+import React from 'react';
+import { Divider, List, ListItem, ListItemText, ListSubheader } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/styles';
 
@@ -23,7 +23,7 @@ const mockGenres = [
   { label: 'Animation', value: 'animation' },
 ];
 
-function Sidebar({ setMobileOpen }) {
+function Sidebar() {
   const theme = useTheme(); // Get current theme (dark/ light mode)
   const classes = useStyles(); // Import custom styles
 
