@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, CircularProgress, Divider, List, ListItem, ListItemText, ListSubheader } from '@mui/material';
+import { Box, CircularProgress, Divider, List, ListItem, ListItemIcon, ListItemText, ListSubheader } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/styles';
 
@@ -7,9 +7,13 @@ import useStyles from './styles';
 import { useGetGenresQuery } from '../../services/tmdb';
 
 // Logos for light and dark themes
-import lightLogo from '../../assets/Cinemax_Logo_Blue.svg';
-import darkLogo from '../../assets/Cinemax_Logo_Red.svg';
+import lightLogo from '../../assets/images/Cinemax_Logo_Blue.svg';
+import darkLogo from '../../assets/images/Cinemax_Logo_Red.svg';
 
+import genreIcons from '../../assets/genres';
+import categoryIcons from '../../assets/categories';
+
+// TODO: Invert Categories and Genres usage
 // Mock data for categories and genres
 // const mockCategories = [
 //   { label: 'Popular', value: 'popular' },
@@ -45,6 +49,7 @@ function Sidebar() {
 
       <Divider />
 
+      {/* TODO: Invert Categories and Genres order */}
       {/* Categories List */}
       <List>
         <ListSubheader>Categories</ListSubheader>
@@ -55,9 +60,9 @@ function Sidebar() {
         ) : data.genres.map(({ name }) => (
           <Link key={name} className={classes.links} to="/">
             <ListItem onClick={() => {}} button> {/* TODO: Add navigation */}
-              {/* <ListItemIcon>
-                <img src={darkLogo} className={classes.genreImage} height={30} />
-              </ListItemIcon> */}
+              <ListItemIcon>
+                <img src={genreIcons[name.toLowerCase()]} className={classes.genreImage} height={30} />
+              </ListItemIcon>
               <ListItemText primary={name} />
             </ListItem>
           </Link>
@@ -72,9 +77,9 @@ function Sidebar() {
         {mockGenres.map(({ label, value }) => (
           <Link key={value} className={classes.links} to="/">
             <ListItem onClick={() => {}} button> {/* TODO: Add navigation */}
-              {/* <ListItemIcon>
-                <img src={darkLogo} className={classes.genreImage} height={30} />
-              </ListItemIcon> */}
+              <ListItemIcon>
+                <img src={categoryIcons[label.toLowerCase()]} className={classes.genreImage} height={30} />
+              </ListItemIcon>
               <ListItemText primary={label} />
             </ListItem>
           </Link>
