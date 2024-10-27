@@ -8,6 +8,8 @@ function Movies() {
   // Destructuring the response from the useGetMoviesQuery hook
   const { data, error, isFetching } = useGetMoviesQuery();
 
+  console.log('~ getMovies:', useGetMoviesQuery());
+
   // Show a loading spinner while the movies data is still being fetched
   if (isFetching) {
     return (
