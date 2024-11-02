@@ -49,10 +49,26 @@ function Sidebar() {
 
       <Divider />
 
-      {/* TODO: Invert Categories and Genres order */}
       {/* Categories List */}
       <List>
         <ListSubheader>Categories</ListSubheader>
+        {mockGenres.map(({ label, value }) => (
+          <Link key={value} className={classes.links} to="/">
+            <ListItem onClick={() => {}} button> {/* TODO: Add navigation */}
+              <ListItemIcon>
+                <img src={categoryIcons[label.toLowerCase()]} className={classes.genreImage} height={30} />
+              </ListItemIcon>
+              <ListItemText primary={label} />
+            </ListItem>
+          </Link>
+        ))}
+      </List>
+
+      <Divider />
+
+      {/* Genres List */}
+      <List>
+        <ListSubheader>Genres</ListSubheader>
         {isFetching ? (
           <Box display="flex" justifyContent="center">
             <CircularProgress />
@@ -64,23 +80,6 @@ function Sidebar() {
                 <img src={genreIcons[name.toLowerCase()]} className={classes.genreImage} height={30} />
               </ListItemIcon>
               <ListItemText primary={name} />
-            </ListItem>
-          </Link>
-        ))}
-      </List>
-
-      <Divider />
-
-      {/* Genres List */}
-      <List>
-        <ListSubheader>Genres</ListSubheader>
-        {mockGenres.map(({ label, value }) => (
-          <Link key={value} className={classes.links} to="/">
-            <ListItem onClick={() => {}} button> {/* TODO: Add navigation */}
-              <ListItemIcon>
-                <img src={categoryIcons[label.toLowerCase()]} className={classes.genreImage} height={30} />
-              </ListItemIcon>
-              <ListItemText primary={label} />
             </ListItem>
           </Link>
         ))}
