@@ -15,18 +15,18 @@ import categoryIcons from '../../assets/categories';
 
 // TODO: Invert Categories and Genres usage
 // Mock data for categories and genres
-// const mockCategories = [
-//   { label: 'Popular', value: 'popular' },
-//   { label: 'Top Rated', value: 'top_rated' },
-//   { label: 'Upcoming', value: 'upcoming' },
-// ];
-
-const mockGenres = [
-  { label: 'Comedy', value: 'comedy' },
-  { label: 'Action', value: 'action' },
-  { label: 'Horror', value: 'horror' },
-  { label: 'Animation', value: 'animation' },
+const mockCategories = [
+  { label: 'Popular', value: 'popular' },
+  { label: 'Top Rated', value: 'top_rated' },
+  { label: 'Upcoming', value: 'upcoming' },
 ];
+
+// const mockGenres = [
+//   { label: 'Comedy', value: 'comedy' },
+//   { label: 'Action', value: 'action' },
+//   { label: 'Horror', value: 'horror' },
+//   { label: 'Animation', value: 'animation' },
+// ];
 
 function Sidebar() {
   const theme = useTheme(); // Get current theme (dark/ light mode)
@@ -52,7 +52,7 @@ function Sidebar() {
       {/* Categories List */}
       <List>
         <ListSubheader>Categories</ListSubheader>
-        {mockGenres.map(({ label, value }) => (
+        {mockCategories.map(({ label, value }) => (
           <Link key={value} className={classes.links} to="/">
             <ListItem onClick={() => {}} button> {/* TODO: Add navigation */}
               <ListItemIcon>
