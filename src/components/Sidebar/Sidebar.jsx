@@ -2,9 +2,11 @@ import React from 'react';
 import { Box, CircularProgress, Divider, List, ListItem, ListItemIcon, ListItemText, ListSubheader } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/styles';
+import { useDispatch } from 'react-redux';
 
 import useStyles from './styles';
 import { useGetGenresQuery } from '../../services/tmdb';
+import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
 
 // Logos for light and dark themes
 import lightLogo from '../../assets/images/Cinemax_Logo_Blue.svg';
@@ -33,8 +35,8 @@ function Sidebar() {
   const classes = useStyles(); // Import custom styles
 
   const { data, isFetching } = useGetGenresQuery();
-
-  console.log('~ getGenres:', useGetGenresQuery());
+  // const { genreIdOrCategoryName } = useSelector((state) => state.currentGenreOrCategory);
+  const dispatch = useDispatch(); // To transfer data from component to Redux
 
   return (
     <>
@@ -54,7 +56,7 @@ function Sidebar() {
         <ListSubheader>Categories</ListSubheader>
         {mockCategories.map(({ label, value }) => (
           <Link key={value} className={classes.links} to="/">
-            <ListItem onClick={() => {}} button> {/* TODO: Add navigation */}
+            <ListItem onClick={() => dispatch(selectGenreOrCategory(value))} button>
               <ListItemIcon>
                 <img src={categoryIcons[label.toLowerCase()]} className={classes.genreImage} height={30} />
               </ListItemIcon>
@@ -73,9 +75,9 @@ function Sidebar() {
           <Box display="flex" justifyContent="center">
             <CircularProgress />
           </Box>
-        ) : data.genres.map(({ name }) => (
+        ) : data.genres.map(({ name, id }) => (
           <Link key={name} className={classes.links} to="/">
-            <ListItem onClick={() => {}} button> {/* TODO: Add navigation */}
+            <ListItem onClick={() => dispatch(selectGenreOrCategory(id))} button>
               <ListItemIcon>
                 <img src={genreIcons[name.toLowerCase()]} className={classes.genreImage} height={30} />
               </ListItemIcon>
