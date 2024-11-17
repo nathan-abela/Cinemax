@@ -5,7 +5,7 @@ import { Menu, AccountCircle, Brightness4, Brightness7 } from '@mui/icons-materi
 import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 
-import { Sidebar } from '../index';
+import { Search, Sidebar } from '../index';
 import useStyles from './styles';
 
 function NavBar() {
@@ -42,8 +42,7 @@ function NavBar() {
             {theme.palette.mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
           </IconButton>
 
-          {/* Placeholder for search (non-mobile screens) */}
-          {!isMobile && 'Search...'}
+          {!isMobile && <Search />}
 
           <div>
             {/* Display login button if not authenticated */}
@@ -70,8 +69,7 @@ function NavBar() {
             )}
           </div>
 
-          {/* Placeholder for search (non-mobile screens) */}
-          {isMobile && 'Search...'}
+          {isMobile && <Search />}
 
         </Toolbar>
       </AppBar>
