@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { AppBar, Avatar, Button, Drawer, IconButton, Toolbar, useMediaQuery } from '@mui/material';
 import { Menu, AccountCircle, Brightness4, Brightness7 } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 
+import { ColorModeContext } from '../../utils/ToggleColorMode';
 import { Search, Sidebar } from '../index';
 import useStyles from './styles';
 
@@ -14,6 +15,8 @@ function NavBar() {
   const isMobile = useMediaQuery('(max-width: 600px)'); // Check if the screen is mobile size
   const theme = useTheme(); // Get current theme (dark/ light mode)
   const isAuthenticated = true; // TODO: Implement authentication logic
+
+  const colorMode = useContext(ColorModeContext);
 
   return (
     <>
@@ -37,7 +40,7 @@ function NavBar() {
           <IconButton
             color="inherit"
             sx={{ ml: 1 }}
-            onClick={() => { }} // TODO: Implement theme toggle functionality
+            onClick={colorMode.toggleColorMode}
           >
             {theme.palette.mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
           </IconButton>
