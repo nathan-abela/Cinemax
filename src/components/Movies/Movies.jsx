@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Box, CircularProgress, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
+import { Box, CircularProgress, Typography } from '@mui/material';
 
-import { MovieList } from '../index';
 import { useGetMoviesQuery } from '../../services/tmdb';
+import { MovieList } from '../index';
 
 function Movies() {
   const [page] = useState(1);

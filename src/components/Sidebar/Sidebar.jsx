@@ -1,19 +1,19 @@
 import React from 'react';
-import { Box, CircularProgress, Divider, List, ListItem, ListItemIcon, ListItemText, ListSubheader } from '@mui/material';
-import { Link } from 'react-router-dom';
-import { useTheme } from '@mui/styles';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { Box, CircularProgress, Divider, List, ListItem, ListItemIcon, ListItemText, ListSubheader } from '@mui/material';
+import { useTheme } from '@mui/styles';
 
-import useStyles from './styles';
-import { useGetGenresQuery } from '../../services/tmdb';
 import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
+import { useGetGenresQuery } from '../../services/tmdb';
+import useStyles from './styles';
 
 // Logos for light and dark themes
 import lightLogo from '../../assets/images/Cinemax_Logo_Blue.svg';
 import darkLogo from '../../assets/images/Cinemax_Logo_Red.svg';
 
-import genreIcons from '../../assets/genres';
 import categoryIcons from '../../assets/categories';
+import genreIcons from '../../assets/genres';
 
 // TODO: Invert Categories and Genres usage
 // Mock data for categories and genres

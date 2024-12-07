@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 
-import App from './components/App';
 import store from './app/store';
+import App from './components/App';
 import ToggleColorMode from './utils/ToggleColorMode';
 
 // Retrieve the root element from '/public/index.html'

@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
-
-import { AppBar, Avatar, Button, Drawer, IconButton, Toolbar, useMediaQuery } from '@mui/material';
-import { Menu, AccountCircle, Brightness4, Brightness7 } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
+
+import { AccountCircle, Brightness4, Brightness7, Menu } from '@mui/icons-material';
+import { AppBar, Avatar, Button, Drawer, IconButton, Toolbar, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
 import { ColorModeContext } from '../../utils/ToggleColorMode';
