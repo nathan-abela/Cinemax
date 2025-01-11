@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Box, CircularProgress, Typography } from '@mui/material';
+import { Box, CircularProgress, Typography, useMediaQuery } from '@mui/material';
 
 import { useGetMoviesQuery } from '../../services/tmdb';
 import { MovieList } from '../index';
@@ -12,7 +12,8 @@ function Movies() {
   // Destructuring the response from the useGetMoviesQuery hook
   const { data, error, isFetching } = useGetMoviesQuery({ genreIdOrCategoryName, page, searchQuery });
 
-  console.log('~ getMovies:', useGetMoviesQuery());
+  const lg = useMediaQuery((theme) => theme.breakpoints.up('lg')); // Detect large screens (lg breakpoint and up)
+  const numberOfMovies = lg ? 16 : 18; // If large screen, show 18 movies; otherwise, show 16
 
   // Show a loading spinner while the movies data is still being fetched
   if (isFetching) {
@@ -43,7 +44,7 @@ function Movies() {
 
   // If data is successfully fetched and contains movies, render the MovieList component with the movies data
   return (
-    <div><MovieList movies={data} /></div>
+    <div><MovieList movies={data} numberOfMovies={numberOfMovies} /></div>
   );
 }
 
