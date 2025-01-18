@@ -12,7 +12,7 @@ function Movies() {
   // Destructuring the response from the useGetMoviesQuery hook
   const { data, error, isFetching } = useGetMoviesQuery({ genreIdOrCategoryName, page, searchQuery });
 
-  const lg = useMediaQuery((theme) => theme.breakpoints.up('lg')); // Detect large screens (lg breakpoint and up)
+  const lg = useMediaQuery((theme) => theme.breakpoints.only('lg')); // Detect large screens
   const numberOfMovies = lg ? 16 : 18; // If large screen, show 18 movies; otherwise, show 16
 
   // Show a loading spinner while the movies data is still being fetched
