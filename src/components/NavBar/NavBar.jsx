@@ -1,10 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { AccountCircle, Brightness4, Brightness7, Menu } from '@mui/icons-material';
 import { AppBar, Avatar, Button, Drawer, IconButton, Toolbar, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
+import { setUser, userSelector } from '../../features/auth';
+import { createSessionId, fetchToken, moviesApi } from '../../utils';
 import { ColorModeContext } from '../../utils/ToggleColorMode';
 import { Search, Sidebar } from '../index';
 import useStyles from './styles';
@@ -14,7 +17,29 @@ function NavBar() {
   const classes = useStyles(); // Import custom styles
   const isMobile = useMediaQuery('(max-width: 600px)'); // Check if the screen is mobile size
   const theme = useTheme(); // Get current theme (dark/ light mode)
-  const isAuthenticated = true; // TODO: Implement authentication logic
+
+  const { isAuthenticated, user } = useSelector(userSelector); // useSelector((state) => state.currentUser)
+  console.log('~ user', user);
+  const dispatch = useDispatch();
+
+  const token = localStorage.getItem('request_token');
+  const sessionIdFromLocalStorage = localStorage.getItem('session_id');
+
+  useEffect(() => {
+    const logInUser = async () => {
+      if (token) {
+        if (sessionIdFromLocalStorage) {
+          const { data: userData } = await moviesApi.get(`/account?session_id=${sessionIdFromLocalStorage}`);
+          dispatch(setUser(userData));
+        } else {
+          const sessionId = await createSessionId();
+          const { data: userData } = await moviesApi.get(`/account?session_id=${sessionId}`);
+          dispatch(setUser(userData));
+        }
+      }
+    };
+    logInUser();
+  }, [token]);
 
   const colorMode = useContext(ColorModeContext);
 
@@ -50,14 +75,14 @@ function NavBar() {
           <div>
             {/* Display login button if not authenticated */}
             {!isAuthenticated ? (
-              <Button color="inherit" onClick={() => { }}> {/* TODO: Implement login logic */}
+              <Button color="inherit" onClick={fetchToken}>
                 Login &nbsp; <AccountCircle />
               </Button>
             ) : (
               <Button
                 color="inherit"
                 component={Link}
-                to="/profile/:id" // TODO: Dynamically set user profile ID
+                to={`/profile/${user.id}`}
                 className={classes.linkButton}
                 onClick={() => { }} // TODO: Handle profile click
               >

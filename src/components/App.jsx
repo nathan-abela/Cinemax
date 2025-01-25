@@ -24,6 +24,7 @@ function App() {
           <Route exact path="/movie/:id" element={<MovieInformation />} /> {/* Movie details page */}
           <Route exact path="/actors/:id" element={<Actors />} /> {/* Actor information page */}
           <Route exact path="/profile/:id" element={<Profile />} /> {/* User profile page */}
+          <Route exact path="/approved" element={<Movies />} /> {/* Approved authentication */}
         </Switch>
       </main>
     </div>
