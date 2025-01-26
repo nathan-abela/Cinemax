@@ -19,7 +19,6 @@ function NavBar() {
   const theme = useTheme(); // Get current theme (dark/ light mode)
 
   const { isAuthenticated, user } = useSelector(userSelector); // useSelector((state) => state.currentUser)
-  console.log('~ user', user);
   const dispatch = useDispatch();
 
   const token = localStorage.getItem('request_token');
