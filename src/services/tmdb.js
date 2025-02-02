@@ -13,12 +13,17 @@ export const tmdbApi = createApi({
       query: () => `genre/movie/list?api_key=${tmdbApiKey}`,
     }),
 
+    // Get Movie
+    getMovie: builder.query({
+      query: (id) => `movie/${id}?append_to_response=videos,credits&api_key=${tmdbApiKey}`,
+    }),
+
     // Get Movies by [Type]
     getMovies: builder.query({
       query: ({ genreIdOrCategoryName, page, searchQuery }) => {
         // Get Movies by Search
         if (searchQuery) {
-          return `/search/movie?query=${searchQuery}&page=${page}&api_key=${tmdbApiKey}`;
+          return `search/movie?query=${searchQuery}&page=${page}&api_key=${tmdbApiKey}`;
         }
 
         // Get Movies by Category - top_rated, upcoming
@@ -39,5 +44,6 @@ export const tmdbApi = createApi({
 
 export const {
   useGetGenresQuery,
+  useGetMovieQuery,
   useGetMoviesQuery,
 } = tmdbApi;
