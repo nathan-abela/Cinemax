@@ -1,10 +1,193 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { Link, useParams } from 'react-router-dom';
+import { ArrowBack, Favorite, FavoriteBorderOutlined, Language, Movie as MovieIcon, PlusOne, Remove, Theaters } from '@mui/icons-material';
+import { Box, Button, ButtonGroup, CircularProgress, Grid, Rating, Typography } from '@mui/material';
+
+import genreIcons from '../../assets/genres';
+import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
+import { useGetMovieQuery } from '../../services/tmdb';
+import useStyles from './styles';
 
 function MovieInformation() {
-  console.log('Movie Information');
+  const classes = useStyles(); // Import custom styles
+  const dispatch = useDispatch();
 
+  const { id } = useParams(); // Get the movie ID from the URL parameters
+  const { data, isFetching, error } = useGetMovieQuery(id); // Fetch movie data using the movie ID
+
+  // Mock data
+  const isMovieFavorited = false;
+  const isMovieWatchlisted = false;
+
+  const addToFavorites = () => {
+    // TODO: Implement the logic to add/remove movie from favorites
+  };
+
+  const addToWatchlist = () => {
+    // TODO: Implement the logic to add/remove movie from watchlist
+  };
+
+  // Show a loading spinner while the movie data is still being fetched
+  if (isFetching) {
+    return (
+      <Box display="flex" justifyContent="center">
+        <CircularProgress size="128px" />
+      </Box>
+    );
+  }
+
+  // If there is an error fetching the data, display a simple error message
+  if (error) {
+    return (
+      <Box display="flex" justifyContent="center">
+        <Link to="/">Something has gone wrong - Go back</Link>
+      </Box>
+    );
+  }
+
+  // If data is successfully fetched and contains the movie, render the movie data
   return (
-    <div>MovieInformation</div>
+    <Grid container className={classes.containerSpaceAround}>
+      {/* Movie Poster */}
+      <Grid item sm={12} lg={4} style={{ marginBottom: '10px' }}>
+        <img
+          className={classes.poster}
+          src={`https://image.tmdb.org/t/p/w500/${data?.poster_path}`}
+          alt={data?.title || 'Movie Poster'}
+        />
+      </Grid>
+
+      {/* Movie Details */}
+      <Grid item container direction="column" lg={7}>
+        {/* Movie Title and Tagline */}
+        <Typography variant="h3" align="center" gutterBottom>
+          {data?.title} ({data.release_date.split('-')[0]})
+        </Typography>
+        <Typography variant="h5" align="center" gutterBottom>
+          {data?.tagline}
+        </Typography>
+
+        {/* Movie Rating, Runtime and Language */}
+        <Grid item className={classes.containerSpaceAround}>
+          <Box display="flex" align="center">
+            <Rating readOnly value={data.vote_average / 2} precision={0.1} />
+
+            <Typography variant="subtitle1" style={{ marginLeft: '10px' }}>
+              {data.vote_average.toFixed(1)} / 10
+            </Typography>
+          </Box>
+
+          <Typography variant="h6" align="center" gutterBottom>
+            {data?.runtime}min {data?.spoken_languages.length > 0 ? `/ ${data?.spoken_languages[0].name}` : ''}
+          </Typography>
+        </Grid>
+
+        {/* Movie Genres */}
+        <Grid item className={classes.genresContainer}>
+          {data?.genres?.map((genre) => (
+            <Link
+              key={genre?.name}
+              className={classes.links}
+              to="/"
+              onClick={() => dispatch(selectGenreOrCategory(genre.id))}
+            >
+              <img src={genreIcons[genre?.name.toLowerCase()]} className={classes.genreImage} height={30} />
+              <Typography color="textPrimary" variant="subtitle1">
+                {genre?.name}
+              </Typography>
+            </Link>
+          ))}
+        </Grid>
+
+        {/* Movie Overview */}
+        <Typography variant="h5" gutterBottom style={{ marginTop: '10px' }}>
+          Overview
+        </Typography>
+        <Typography style={{ marginBottom: '32px' }}>
+          {data?.overview}
+        </Typography>
+
+        {/* Top Cast */}
+        <Typography variant="5h" gutterBottom>
+          Top Cast
+        </Typography>
+        <Grid item container spacing={2}>
+          {data && data.credits?.cast?.map((character, i) => (
+            character.profile_path && (
+              <Grid
+                key={i}
+                item
+                xs={4}
+                md={2}
+                component={Link}
+                to={`/actors/${character.id}`}
+                style={{ textDecoration: 'none' }}
+              >
+                <img
+                  className={classes.castImage}
+                  src={`https://image.tmdb.org/t/p/w500/${character.profile_path}`}
+                  alt={character.name}
+                />
+                <Typography color="textPrimary">{character?.name}</Typography>
+                {/* Show only the first actor name if multiple are provided */}
+                <Typography color="textSecondary">{character?.character.split('/')[0]}</Typography>
+              </Grid>
+            )
+          )).slice(0, 6)}
+        </Grid>
+
+        {/* Buttons  */}
+        <Grid item container style={{ marginTop: '32px' }}>
+          <div className={classes.buttonsContainer}>
+            {/* External Links Buttons */}
+            <Grid item xs={12} sm={6} className={classes.buttonsContainer}>
+              <ButtonGroup size="small" variant="outlined">
+                <Button
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={data?.homepage}
+                  endIcon={<Language />}
+                >
+                  Website
+                </Button>
+                <Button
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={`https://www.imdb.com/title/${data?.imdb_id}`}
+                  endIcon={<MovieIcon />}
+                >
+                  IMDB
+                </Button>
+                <Button onClick={() => {}} href="#" endIcon={<Theaters />}> {/* TODO: Implement video trailer */}
+                  Trailer
+                </Button>
+              </ButtonGroup>
+            </Grid>
+
+            {/* User Action Buttons (Favorites, Watchlist, Back) */}
+            <Grid item xs={12} sm={6} className={classes.buttonsContainer}>
+              <ButtonGroup size="medium" variant="outlined">
+                {/* Toggle favorite state */}
+                <Button onClick={addToFavorites} endIcon={isMovieFavorited ? <FavoriteBorderOutlined /> : <Favorite />}>
+                  {isMovieFavorited ? 'Unfavourite' : 'Favourite'}
+                </Button>
+                {/* Toggle watchlist state */}
+                <Button onClick={addToWatchlist} endIcon={isMovieWatchlisted ? <Remove /> : <PlusOne />}>
+                  Watchlist
+                </Button>
+                {/* Navigate back to homepage */}
+                <Button endIcon={<ArrowBack />}>
+                  <Typography style={{ textDecoration: 'none' }} component={Link} to="/" color="inherit" variant="subtitle2">
+                    Back
+                  </Typography>
+                </Button>
+              </ButtonGroup>
+            </Grid>
+          </div>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 }
 
