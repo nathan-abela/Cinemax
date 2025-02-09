@@ -6,7 +6,8 @@ import { Box, Button, ButtonGroup, CircularProgress, Grid, Rating, Typography } 
 
 import genreIcons from '../../assets/genres';
 import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
-import { useGetMovieQuery } from '../../services/tmdb';
+import { useGetMovieQuery, useGetRecommendationsQuery } from '../../services/tmdb';
+import { MovieList } from '../index';
 import useStyles from './styles';
 
 function MovieInformation() {
@@ -15,6 +16,10 @@ function MovieInformation() {
 
   const { id } = useParams(); // Get the movie ID from the URL parameters
   const { data, isFetching, error } = useGetMovieQuery(id); // Fetch movie data using the movie ID
+  const { data: recommendations, isFetching: isRecommendationsFetching } = useGetRecommendationsQuery({
+    list: 'recommendations',
+    movie_id: id,
+  }); // Fetch recommended movies
 
   // Mock data
   const isMovieFavorited = false;
@@ -187,6 +192,29 @@ function MovieInformation() {
           </div>
         </Grid>
       </Grid>
+
+      {/* Movies Recommendation */}
+      <Box marginTop="80px" width="100%">
+        <Typography variant="h3" align="center" gutterBottom>
+          You might also like
+        </Typography>
+
+        {/* Loop through the recommended movies */}
+        {/* eslint-disable no-nested-ternary */}
+        {isRecommendationsFetching ? (
+          <Box display="flex" justifyContent="center">
+            <CircularProgress size="64px" />
+          </Box>
+        ) : recommendations?.results?.length > 0 ? (
+          <MovieList movies={recommendations} numberOfMovies={12} />
+        ) : (
+          <Box display="flex" justifyContent="center" marginTop="32px">
+            <Typography variant="h6">
+              No recommendations found
+            </Typography>
+          </Box>
+        )}
+      </Box>
     </Grid>
   );
 }
