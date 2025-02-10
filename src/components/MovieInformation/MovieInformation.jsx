@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowBack, Favorite, FavoriteBorderOutlined, Language, Movie as MovieIcon, PlusOne, Remove, Theaters } from '@mui/icons-material';
-import { Box, Button, ButtonGroup, CircularProgress, Grid, Rating, Typography } from '@mui/material';
+import { Box, Button, ButtonGroup, CircularProgress, Grid, Modal, Rating, Typography } from '@mui/material';
 
 import genreIcons from '../../assets/genres';
 import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
@@ -13,6 +13,7 @@ import useStyles from './styles';
 function MovieInformation() {
   const classes = useStyles(); // Import custom styles
   const dispatch = useDispatch();
+  const [open, setOpen] = useState(false); // Trailer modal state
 
   const { id } = useParams(); // Get the movie ID from the URL parameters
   const { data, isFetching, error } = useGetMovieQuery(id); // Fetch movie data using the movie ID
@@ -164,7 +165,7 @@ function MovieInformation() {
                 >
                   IMDB
                 </Button>
-                <Button onClick={() => {}} href="#" endIcon={<Theaters />}> {/* TODO: Implement video trailer */}
+                <Button onClick={() => setOpen(true)} href="#" endIcon={<Theaters />}>
                   Trailer
                 </Button>
               </ButtonGroup>
@@ -215,6 +216,25 @@ function MovieInformation() {
           </Box>
         )}
       </Box>
+
+      {/* Movie Trailer */}
+      <Modal
+        closeAfterTransition
+        className={classes.modal}
+        open={open}
+        onClose={() => setOpen(false)}
+      >
+        {trailer && (
+        <iframe
+          autoPlay
+          allow="autoplay"
+          allowFullScreen
+          className={classes.video}
+          title="Trailer"
+          src={`https://www.youtube.com/embed/${data.videos.results[0].key}?autoplay=1`}
+        />
+        )}
+      </Modal>
     </Grid>
   );
 }
