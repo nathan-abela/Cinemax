@@ -34,6 +34,22 @@ function MovieInformation() {
     // TODO: Implement the logic to add/remove movie from watchlist
   };
 
+  const getOfficialTrailer = () => {
+    if (!data?.videos?.results) {
+      return null;
+    }
+
+    // Get all trailers
+    const trailers = data.videos.results.filter((video) => video.type === 'Trailer');
+
+    // Prioritize the one explicitly named "Official Trailer"
+    const officialTrailer = trailers.find((video) => video.name.toLowerCase() === 'official trailer');
+
+    // Fallback to the most recent official trailer
+    return officialTrailer || trailers.sort((a, b) => new Date(b.published_at) - new Date(a.published_at))[0] || null;
+  };
+  const trailer = getOfficialTrailer();
+
   // Show a loading spinner while the movie data is still being fetched
   if (isFetching) {
     return (
@@ -231,7 +247,7 @@ function MovieInformation() {
           allowFullScreen
           className={classes.video}
           title="Trailer"
-          src={`https://www.youtube.com/embed/${data.videos.results[0].key}?autoplay=1`}
+          src={`https://www.youtube.com/embed/${trailer.key}?autoplay=1`}
         />
         )}
       </Modal>
