@@ -3,10 +3,10 @@ import { useSelector } from 'react-redux';
 import { Box, CircularProgress, Typography, useMediaQuery } from '@mui/material';
 
 import { useGetMoviesQuery } from '../../services/tmdb';
-import { MovieList } from '../index';
+import { MovieList, Pagination } from '../index';
 
 function Movies() {
-  const [page] = useState(1);
+  const [page, setPage] = useState(1);
   const { genreIdOrCategoryName, searchQuery } = useSelector((state) => state.currentGenreOrCategory);
 
   // Destructuring the response from the useGetMoviesQuery hook
@@ -42,9 +42,12 @@ function Movies() {
     return 'An error has occurred';
   }
 
-  // If data is successfully fetched and contains movies, render the MovieList component with the movies data
+  // If data is successfully fetched and contains movies render the MovieList component and Pagination component
   return (
-    <div><MovieList movies={data} numberOfMovies={numberOfMovies} /></div>
+    <div>
+      <MovieList movies={data} numberOfMovies={numberOfMovies} />
+      <Pagination currentPage={page} setPage={setPage} totalPages={data.total_pages} />
+    </div>
   );
 }
 

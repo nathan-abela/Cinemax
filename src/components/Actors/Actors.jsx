@@ -1,20 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowBack, Movie as MovieIcon } from '@mui/icons-material';
 import { Box, Button, CircularProgress, Grid, Typography } from '@mui/material';
 
 import { useGetActorsDetailsQuery, useGetMoviesByActorsIdQuery } from '../../services/tmdb';
-import { MovieList } from '../index';
+import { MovieList, Pagination } from '../index';
 import useStyles from './styles';
 
 function Actors() {
   const classes = useStyles(); // Import custom styles
+  const [page, setPage] = useState(1);
 
   const { id } = useParams(); // Get the actor ID from the URL parameters
   const navigate = useNavigate(); // Navigate back to the previous page
 
   const { data, isFetching, error } = useGetActorsDetailsQuery(id); // Fetch actor data by actor ID
-  const { data: movies, isMoviesFetching } = useGetMoviesByActorsIdQuery({ actorsId: id }); // Fetch movies by actor ID
+  const { data: movies, isMoviesFetching } = useGetMoviesByActorsIdQuery({ actorsId: id, page }); // Fetch movies by actor ID
 
   // Show a loading spinner while the actor data is still being fetched
   if (isFetching) {
@@ -100,7 +101,10 @@ function Actors() {
             <CircularProgress size="64px" />
           </Box>
         ) : movies && movies?.results?.length > 0 ? (
-          <MovieList movies={movies} numberOfMovies={12} />
+          <>
+            <MovieList movies={movies} numberOfMovies={12} />
+            <Pagination currentPage={page} setPage={setPage} totalPages={movies?.total_pages} />
+          </>
         ) : (
           <Box display="flex" justifyContent="center" marginTop="32px">
             <Typography variant="h6">
