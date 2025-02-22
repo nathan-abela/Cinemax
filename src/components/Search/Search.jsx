@@ -27,8 +27,9 @@ function Search() {
     <div className={classes.searchContainer}>
       <TextField
         onKeyDown={handleKeyDown}
-        value={query}
         onChange={(e) => setQuery(e.target.value)}
+        value={query}
+        placeholder="Search for a movie"
         variant="standard"
         InputProps={{
           className: classes.input,
