@@ -101,7 +101,10 @@ function MovieInformation() {
           </Box>
 
           <Typography variant="h6" align="center" gutterBottom>
-            {data?.runtime}min {data?.spoken_languages.length > 0 ? `/ ${data?.spoken_languages[0].name}` : ''}
+            {data?.runtime
+              ? `${Math.floor(data.runtime / 60)}h ${data.runtime % 60}m`
+              : ''} | {' '}
+            {data?.spoken_languages[0]?.name}
           </Typography>
         </Grid>
 
@@ -159,7 +162,7 @@ function MovieInformation() {
           )).slice(0, 6)}
         </Grid>
 
-        {/* Buttons  */}
+        {/* Buttons */}
         <Grid item container style={{ marginTop: '32px' }}>
           <div className={classes.buttonsContainer}>
             {/* External Links Buttons */}
