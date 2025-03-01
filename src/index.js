@@ -8,6 +8,8 @@ import store from './app/store';
 import App from './components/App';
 import ToggleColorMode from './utils/ToggleColorMode';
 
+import './index.css';
+
 // Retrieve the root element from '/public/index.html'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
