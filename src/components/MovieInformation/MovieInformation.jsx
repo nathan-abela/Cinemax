@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ArrowBack, Favorite, FavoriteBorderOutlined, Language, Movie as MovieIcon, PlusOne, Remove, Theaters } from '@mui/icons-material';
 import { Box, Button, ButtonGroup, CircularProgress, Grid, Modal, Rating, Typography } from '@mui/material';
 
@@ -14,6 +14,7 @@ function MovieInformation() {
   const classes = useStyles(); // Import custom styles
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false); // Trailer modal state
+  const navigate = useNavigate(); // Navigate back to the previous page
 
   const { id } = useParams(); // Get the movie ID from the URL parameters
   const { data, isFetching, error } = useGetMovieQuery(id); // Fetch movie data using the movie ID
@@ -62,8 +63,10 @@ function MovieInformation() {
   // If there is an error fetching the data, display a simple error message
   if (error) {
     return (
-      <Box display="flex" justifyContent="center">
-        <Link to="/">Something has gone wrong - Go back</Link>
+      <Box display="flex" justifyContent="center" alignItems="center">
+        <Button startIcon={<ArrowBack />} onClick={() => navigate(-1)} color="primary">
+          Something has gone wrong - Go back
+        </Button>
       </Box>
     );
   }
@@ -72,7 +75,7 @@ function MovieInformation() {
   return (
     <Grid container className={classes.containerSpaceAround}>
       {/* Movie Poster */}
-      <Grid item sm={12} lg={4} style={{ marginBottom: '10px' }}>
+      <Grid item sm={12} lg={4} align="center">
         <img
           className={classes.poster}
           src={`https://image.tmdb.org/t/p/w500/${data?.poster_path}`}
