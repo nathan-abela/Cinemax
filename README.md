@@ -1,70 +1,100 @@
-# Getting Started with Create React App
+<div align="center">
+    <a href="https://nathan-abela.github.io./Cinemax">
+        <img src="src/assets/images/Cinemax_Icon.svg" width="100" alt="Cinemax Logo"/>
+    </a>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Cinemax
 
-## Available Scripts
+Your AI-Powered Movie Guide - Discover, Track, and Explore Films Like Never Before
 
-In the project directory, you can run:
+<a href="https://github.com/nathan-abela/Cinemax/commits/master">
+    <img src="https://img.shields.io/github/last-commit/nathan-abela/Cinemax" alt="Last Commit Shield Badge"/>
+</a>
+<a href="https://github.com/nathan-abela/Cinemax/archive/master.zip">
+    <img src="https://img.shields.io/github/repo-size/nathan-abela/Cinemax" alt="Repository Size Shield Badge"/>
+</a>
+<a href="https://github.com/nathan-abela/Cinemax/stargazers">
+    <img src="https://img.shields.io/github/stars/nathan-abela/Cinemax?style=social" alt="Repository Stars" >
+</a>
+</div>
 
-### `npm start`
+## Introduction
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Cinemax is an AI-powered movie discovery platform built with React.js, Redux for state management, Material UI for the interface, and Axios for API integration. It also features an in-app voice assistant powered by Alan AI for hands-free interaction.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Application Showcase
 
-### `npm test`
+<!-- Insert Image of homepage -->
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Live Demo
 
-### `npm run build`
+For a quick preview, check out the [Live Demo](https://nathan-abela.github.io./Cinemax).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Features
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **Favorites & Watchlists** - Create and manage your personal movie library.
+- **Light and Dark Mode** - Switch themes to match your preference.
+- **Movie Sorting & Details** - Sort movies by categories or genres and explore comprehensive details about films and actors.
+- **User Authentication** - Secure login and account management for personalized experiences.
+- **Voice Control Navigation** - Use Alan AI for hands-free interaction. Try commands like:
+  - _"Find movies directed by Martin Scorsese"_
+  - _"Search for Superman movies"_
+  - _"Show me top-rated action movies"_
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Getting Started
 
-### `npm run eject`
+### Running the Application
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+To get started with Cinemax locally, follow these steps:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. **Clone the repository:**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+    ```bash
+    git clone https://github.com/nathan-abela/Cinemax.git
+    ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+2. **Install Dependencies:**
 
-## Learn More
+    ```bash
+    npm install
+    ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+3. **Setup Environment Variables:**
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+    - Create a `.env` file.
+    - Obtain a free TMDB API key from [The Movie DB](https://www.themoviedb.org) and add it to your `.env` file:
 
-### Code Splitting
+        ```env
+        REACT_APP_TMDB_KEY=<your_tmdb_api_key>
+        ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+4. **Start the development server:**
 
-### Analyzing the Bundle Size
+    ```bash
+    npm start
+    ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+5. **Open your browser:**
 
-### Making a Progressive Web App
+    Navigate to [http://localhost:3000](http://localhost:3000) to see the application.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Technologies Used
 
-### Advanced Configuration
+- [React.js](https://react.dev)
+- [Redux](https://redux.js.org)
+- [Material UI](https://mui.com/material-ui)
+- [Axios](https://axios-http.com)
+- [Alan AI](https://alan.app)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Resources
 
-### Deployment
+- [TMDB API Documentation](https://developers.themoviedb.org/3/getting-started/introduction)
+- [Alan AI Documentation](https://alan.app/docs/)
+- [MUI Library](https://mui.com/)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+---
 
-### `npm run build` fails to minify
+<p align="center">
+  <img src="./src//assets/images/Cinemax_Icon.svg" alt="Cinemax Icon" width="100" />
+</p>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
