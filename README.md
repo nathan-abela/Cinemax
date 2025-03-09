@@ -7,10 +7,10 @@
 
 Your AI-Powered Movie Guide - Discover, Track, and Explore Films Like Never Before
 
-<a href="https://github.com/nathan-abela/Cinemax/commits/master">
+<a href="https://github.com/nathan-abela/Cinemax/commits/main">
     <img src="https://img.shields.io/github/last-commit/nathan-abela/Cinemax" alt="Last Commit Shield Badge"/>
 </a>
-<a href="https://github.com/nathan-abela/Cinemax/archive/master.zip">
+<a href="https://github.com/nathan-abela/Cinemax/archive/main.zip">
     <img src="https://img.shields.io/github/repo-size/nathan-abela/Cinemax" alt="Repository Size Shield Badge"/>
 </a>
 <a href="https://github.com/nathan-abela/Cinemax/stargazers">
@@ -95,6 +95,6 @@ To get started with Cinemax locally, follow these steps:
 ---
 
 <p align="center">
-  <img src="./src//assets/images/Cinemax_Icon.svg" alt="Cinemax Icon" width="100" />
+  <img src="./src//assets/images/Cinemax_Icon.svg" alt="Cinemax Icon" width="50" />
 </p>
 
