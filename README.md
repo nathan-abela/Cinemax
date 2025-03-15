@@ -1,5 +1,5 @@
 <div align="center">
-    <a href="https://nathan-abela.github.io./Cinemax">
+    <a href="https://nathan-abela.github.io/Cinemax">
         <img src="src/assets/images/Cinemax_Icon.svg" width="100" alt="Cinemax Logo"/>
     </a>
 
@@ -28,7 +28,7 @@ Cinemax is an AI-powered movie discovery platform built with React.js, Redux for
 
 ### Live Demo
 
-For a quick preview, check out the [Live Demo](https://nathan-abela.github.io./Cinemax).
+For a quick preview, check out the [Live Demo](https://nathan-abela.github.io/Cinemax).
 
 ## Features
 
