@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ArrowBack, Favorite, FavoriteBorderOutlined, Language, Movie as MovieIcon, PlusOne, Remove, Theaters } from '@mui/icons-material';
 import { Box, Button, ButtonGroup, CircularProgress, Grid, Modal, Rating, Typography } from '@mui/material';
@@ -29,7 +29,7 @@ function MovieInformation() {
   const apiKey = process.env.REACT_APP_TMDB_KEY;
   const sessionId = localStorage.getItem('session_id');
 
-  const { user } = userSelector(); // Get the user data
+  const { user } = useSelector(userSelector); // Get the user data
   const [isMovieFavorited, setIsMovieFavorited] = useState(false);
   const [isMovieWatchlisted, setIsMovieWatchlisted] = useState(false);
   const { data: favoriteMovies, refetch: refetchFavorited } = useGetUserListQuery(
