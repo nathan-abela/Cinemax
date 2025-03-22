@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ArrowBack, Favorite, FavoriteBorderOutlined, Language, Movie as MovieIcon, PlusOne, Remove, Theaters } from '@mui/icons-material';
 import { Box, Button, ButtonGroup, CircularProgress, Grid, Modal, Rating, Typography } from '@mui/material';
+import axios from 'axios';
 
 import genreIcons from '../../assets/genres';
+import { userSelector } from '../../features/auth';
 import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
-import { useGetMovieQuery, useGetRecommendationsQuery } from '../../services/tmdb';
+import { useGetMovieQuery, useGetRecommendationsQuery, useGetUserListQuery } from '../../services/tmdb';
 import { MovieList } from '../index';
 import useStyles from './styles';
 
@@ -23,16 +25,73 @@ function MovieInformation() {
     movie_id: id,
   }); // Fetch recommended movies
 
-  // Mock data
-  const isMovieFavorited = false;
-  const isMovieWatchlisted = false;
+  const TMDB_API_BASE_URL = 'https://api.themoviedb.org/3';
+  const apiKey = process.env.REACT_APP_TMDB_KEY;
+  const sessionId = localStorage.getItem('session_id');
 
-  const addToFavorites = () => {
-    // TODO: Implement the logic to add/remove movie from favorites
+  const { user } = userSelector(); // Get the user data
+  const [isMovieFavorited, setIsMovieFavorited] = useState(false);
+  const [isMovieWatchlisted, setIsMovieWatchlisted] = useState(false);
+  const { data: favoriteMovies, refetch: refetchFavorited } = useGetUserListQuery(
+    {
+      accountId: user.id,
+      listName: 'favorite/movies',
+      sessionId,
+      page: 1,
+    },
+  );
+  const { data: watchlistMovies, refetch: refetchWatchlisted } = useGetUserListQuery(
+    {
+      accountId: user.id,
+      listName: 'watchlist/movies',
+      sessionId,
+      page: 1,
+    },
+  );
+
+  useEffect(() => {
+    refetchFavorited();
+    refetchWatchlisted();
+  }, []);
+
+  useEffect(() => {
+    setIsMovieFavorited(!!favoriteMovies?.results?.find((movie) => movie?.id === data?.id));
+  }, [favoriteMovies, data]);
+
+  useEffect(() => {
+    setIsMovieWatchlisted(!!watchlistMovies?.results?.find((movie) => movie?.id === data?.id));
+  }, [watchlistMovies, data]);
+
+  const addToFavorites = async () => {
+    try {
+      await axios.post(
+        `${TMDB_API_BASE_URL}/account/${user.id}/favorite?api_key=${apiKey}&session_id=${sessionId}`,
+        {
+          media_type: 'movie',
+          media_id: id,
+          favorite: !isMovieFavorited,
+        },
+      );
+      setIsMovieFavorited((prev) => !prev);
+    } catch (err) {
+      console.error('Error adding movie to favorite:', err);
+    }
   };
 
-  const addToWatchlist = () => {
-    // TODO: Implement the logic to add/remove movie from watchlist
+  const addToWatchlist = async () => {
+    try {
+      await axios.post(
+        `${TMDB_API_BASE_URL}/account/${user.id}/watchlist?api_key=${apiKey}&session_id=${sessionId}`,
+        {
+          media_type: 'movie',
+          media_id: id,
+          watchlist: !isMovieWatchlisted,
+        },
+      );
+      setIsMovieWatchlisted((prev) => !prev);
+    } catch (err) {
+      console.error('Error adding movie to watchlist:', err);
+    }
   };
 
   const getOfficialTrailer = () => {
