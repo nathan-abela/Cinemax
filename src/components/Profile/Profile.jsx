@@ -1,15 +1,37 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { ExitToApp } from '@mui/icons-material';
 import { Box, Button, Typography } from '@mui/material';
 
 import { userSelector } from '../../features/auth';
+import { useGetUserListQuery } from '../../services/tmdb';
+import { RatedCards } from '../index';
 
 function Profile() {
   const { user } = useSelector(userSelector);
   console.log('~ user:', user);
 
-  const favouriteMovies = []; // Placeholder for favourite movies
+  const { data: favoriteMovies, refetch: refetchFavorited } = useGetUserListQuery(
+    {
+      accountId: user.id,
+      listName: 'favorite/movies',
+      sessionId: localStorage.getItem('session_id'),
+      page: 1,
+    },
+  );
+  const { data: watchlistMovies, refetch: refetchWatchlisted } = useGetUserListQuery(
+    {
+      accountId: user.id,
+      listName: 'watchlist/movies',
+      sessionId: localStorage.getItem('session_id'),
+      page: 1,
+    },
+  );
+
+  useEffect(() => {
+    refetchFavorited();
+    refetchWatchlisted();
+  }, []);
 
   // Logs out the user by clearing local storage and redirecting to the home page.
   const logOut = () => {
@@ -28,9 +50,16 @@ function Profile() {
         </Button>
       </Box>
 
-      {!favouriteMovies.length
+      {!favoriteMovies?.results?.length && !watchlistMovies?.results?.length
         ? <Typography variant="h5">Add Favourites or watchlist some movies to see them here!</Typography>
-        : <Box>Favourite Movies</Box>} {/* TODO: Implement favourite movies functionality */}
+        : (
+          <Box>
+            <Box>
+              <RatedCards title="Favorite Movies" movies={favoriteMovies} />
+              <RatedCards title="Watchlist" movies={watchlistMovies} />
+            </Box>
+          </Box>
+        )}
     </Box>
   );
 }
