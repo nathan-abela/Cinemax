@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { CssBaseline } from '@mui/material';
 import { Route, Routes as Switch } from 'react-router-dom';
 
+import useAlan from './Alan';
 import useStyles from './styles';
 
 import { Actors, MovieInformation, Movies, NavBar, Profile } from './index';
 
 function App() {
   const classes = useStyles(); // Applying custom Material-UI styles
+  const alanBtnContainer = useRef();
+
+  useAlan(); // Initialize Alan AI SDK for voice commands
 
   return (
     <div className={classes.root}>
@@ -27,6 +31,7 @@ function App() {
           <Route exact path="/approved" element={<Movies />} /> {/* Approved authentication */}
         </Switch>
       </main>
+      <div ref={alanBtnContainer} />
     </div>
   );
 }
