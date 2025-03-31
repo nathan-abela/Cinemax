@@ -34,19 +34,21 @@ function MovieInformation() {
   const [isMovieWatchlisted, setIsMovieWatchlisted] = useState(false);
   const { data: favoriteMovies, refetch: refetchFavorited } = useGetUserListQuery(
     {
-      accountId: user.id,
+      accountId: user?.id,
       listName: 'favorite/movies',
       sessionId,
       page: 1,
     },
+    { skip: !user },
   );
   const { data: watchlistMovies, refetch: refetchWatchlisted } = useGetUserListQuery(
     {
-      accountId: user.id,
+      accountId: user?.id,
       listName: 'watchlist/movies',
       sessionId,
       page: 1,
     },
+    { skip: !user },
   );
 
   useEffect(() => {
@@ -63,6 +65,7 @@ function MovieInformation() {
   }, [watchlistMovies, data]);
 
   const addToFavorites = async () => {
+    if (!user) return;
     try {
       await axios.post(
         `${TMDB_API_BASE_URL}/account/${user.id}/favorite?api_key=${apiKey}&session_id=${sessionId}`,
@@ -79,6 +82,7 @@ function MovieInformation() {
   };
 
   const addToWatchlist = async () => {
+    if (!user) return;
     try {
       await axios.post(
         `${TMDB_API_BASE_URL}/account/${user.id}/watchlist?api_key=${apiKey}&session_id=${sessionId}`,
@@ -246,7 +250,7 @@ function MovieInformation() {
                 >
                   IMDB
                 </Button>
-                <Button onClick={() => setOpen(true)} href="#" endIcon={<Theaters />}>
+                <Button onClick={() => setOpen(true)} endIcon={<Theaters />}>
                   Trailer
                 </Button>
               </ButtonGroup>
@@ -256,6 +260,7 @@ function MovieInformation() {
             <Grid item xs={12} sm={6} className={classes.buttonsContainer}>
               <ButtonGroup size="medium" variant="outlined">
                 {/* Toggle favorite state */}
+                {/* TODO: Handle logic for when signed out - consider showing alert/ prompt login */}
                 <Button onClick={addToFavorites} endIcon={isMovieFavorited ? <FavoriteBorderOutlined /> : <Favorite />}>
                   {isMovieFavorited ? 'Unfavourite' : 'Favourite'}
                 </Button>
