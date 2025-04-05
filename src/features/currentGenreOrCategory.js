@@ -11,7 +11,6 @@ export const genreOrCategory = createSlice({
   reducers: {
     // Reducer function to handle selecting a genre or category
     selectGenreOrCategory: (state, action) => {
-      console.log('~ action.payload', action.payload);
       state.genreIdOrCategoryName = action.payload;
       state.searchQuery = '';
     },

@@ -9,7 +9,6 @@ import { RatedCards } from '../index';
 
 function Profile() {
   const { user } = useSelector(userSelector);
-  console.log('~ user:', user);
 
   const { data: favoriteMovies, refetch: refetchFavorited } = useGetUserListQuery(
     {
