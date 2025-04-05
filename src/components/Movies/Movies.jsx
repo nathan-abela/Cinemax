@@ -13,7 +13,7 @@ function Movies() {
   const { data, error, isFetching } = useGetMoviesQuery({ genreIdOrCategoryName, page, searchQuery });
 
   const lg = useMediaQuery((theme) => theme.breakpoints.only('lg')); // Detect large screens
-  const numberOfMovies = lg ? 16 : 18; // If large screen, show 18 movies; otherwise, show 16
+  const numberOfMovies = lg ? 17 : 19; // If large screen, show 19 movies; otherwise, show 17
 
   // Show a loading spinner while the movies data is still being fetched
   if (isFetching) {
@@ -46,6 +46,7 @@ function Movies() {
   return (
     <div>
       <FeaturedMovie movie={data?.results[0]} />
+      <MovieList movies={data} numberOfMovies={numberOfMovies} excludeFirst />
       <Pagination currentPage={page} setPage={setPage} totalPages={data.total_pages} />
     </div>
   );
