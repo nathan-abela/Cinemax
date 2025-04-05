@@ -1,5 +1,5 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Box, CircularProgress, Divider, List, ListItem, ListItemIcon, ListItemText, ListSubheader } from '@mui/material';
 import { useTheme } from '@mui/styles';
@@ -30,13 +30,18 @@ const mockCategories = [
 //   { label: 'Animation', value: 'animation' },
 // ];
 
-function Sidebar() {
+function Sidebar({ setMobileOpen }) {
   const theme = useTheme(); // Get current theme (dark/ light mode)
   const classes = useStyles(); // Import custom styles
 
   const { data, isFetching } = useGetGenresQuery();
-  // const { genreIdOrCategoryName } = useSelector((state) => state.currentGenreOrCategory);
   const dispatch = useDispatch(); // To transfer data from component to Redux
+
+  const { genreIdOrCategoryName } = useSelector((state) => state.currentGenreOrCategory);
+  // Close mobile menu when a category or genre is selected
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [genreIdOrCategoryName]);
 
   return (
     <>
