@@ -15,26 +15,17 @@ import darkLogo from '../../assets/images/Cinemax_Logo_Red.svg';
 import categoryIcons from '../../assets/categories';
 import genreIcons from '../../assets/genres';
 
-// TODO: Invert Categories and Genres usage
-// Mock data for categories and genres
-const mockCategories = [
+const categories = [
   { label: 'Popular', value: 'popular' },
   { label: 'Top Rated', value: 'top_rated' },
   { label: 'Upcoming', value: 'upcoming' },
 ];
 
-// const mockGenres = [
-//   { label: 'Comedy', value: 'comedy' },
-//   { label: 'Action', value: 'action' },
-//   { label: 'Horror', value: 'horror' },
-//   { label: 'Animation', value: 'animation' },
-// ];
-
 function Sidebar({ setMobileOpen }) {
   const theme = useTheme(); // Get current theme (dark/ light mode)
   const classes = useStyles(); // Import custom styles
 
-  const { data, isFetching } = useGetGenresQuery();
+  const { data: genresData, isFetching: isFetchingGenres } = useGetGenresQuery();
   const dispatch = useDispatch(); // To transfer data from component to Redux
 
   const { genreIdOrCategoryName } = useSelector((state) => state.currentGenreOrCategory);
@@ -59,7 +50,7 @@ function Sidebar({ setMobileOpen }) {
       {/* Categories List */}
       <List>
         <ListSubheader>Categories</ListSubheader>
-        {mockCategories.map(({ label, value }) => (
+        {categories?.map(({ label, value }) => (
           <Link key={value} className={classes.links} to="/">
             <ListItem onClick={() => dispatch(selectGenreOrCategory(value))} button>
               <ListItemIcon>
@@ -76,11 +67,11 @@ function Sidebar({ setMobileOpen }) {
       {/* Genres List */}
       <List>
         <ListSubheader>Genres</ListSubheader>
-        {isFetching ? (
+        {isFetchingGenres ? (
           <Box display="flex" justifyContent="center">
             <CircularProgress />
           </Box>
-        ) : data.genres.map(({ name, id }) => (
+        ) : genresData.genres.map(({ name, id }) => (
           <Link key={name} className={classes.links} to="/">
             <ListItem onClick={() => dispatch(selectGenreOrCategory(id))} button>
               <ListItemIcon>
