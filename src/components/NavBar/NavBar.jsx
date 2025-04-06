@@ -75,7 +75,7 @@ function NavBar() {
             {/* Display login button if not authenticated */}
             {!isAuthenticated ? (
               <Button color="inherit" onClick={fetchToken}>
-                Login &nbsp; <AccountCircle />
+                {!isMobile && <>Login &nbsp;</>} <AccountCircle />
               </Button>
             ) : (
               <Button
