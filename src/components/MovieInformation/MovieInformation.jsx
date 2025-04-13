@@ -27,9 +27,12 @@ function MovieInformation() {
 
   const TMDB_API_BASE_URL = 'https://api.themoviedb.org/3';
   const apiKey = process.env.REACT_APP_TMDB_KEY;
-  const sessionId = localStorage.getItem('session_id');
 
   const { user } = useSelector(userSelector); // Get the user data
+  const sessionId = localStorage.getItem('session_id');
+  const isSessionValid = sessionId && sessionId !== 'null' && sessionId !== 'undefined';
+  const isAuthenticated = user?.id && isSessionValid;
+
   const [isMovieFavorited, setIsMovieFavorited] = useState(false);
   const [isMovieWatchlisted, setIsMovieWatchlisted] = useState(false);
   const { data: favoriteMovies, refetch: refetchFavorited } = useGetUserListQuery(
@@ -39,7 +42,7 @@ function MovieInformation() {
       sessionId,
       page: 1,
     },
-    { skip: !user },
+    { skip: !isAuthenticated },
   );
   const { data: watchlistMovies, refetch: refetchWatchlisted } = useGetUserListQuery(
     {
@@ -48,13 +51,16 @@ function MovieInformation() {
       sessionId,
       page: 1,
     },
-    { skip: !user },
+    { skip: !isAuthenticated },
   );
 
+  // Refetch lists only if user is authenticated
   useEffect(() => {
-    refetchFavorited();
-    refetchWatchlisted();
-  }, []);
+    if (isAuthenticated) {
+      refetchFavorited();
+      refetchWatchlisted();
+    }
+  }, [isAuthenticated]);
 
   useEffect(() => {
     setIsMovieFavorited(!!favoriteMovies?.results?.find((movie) => movie?.id === data?.id));
@@ -65,7 +71,7 @@ function MovieInformation() {
   }, [watchlistMovies, data]);
 
   const addToFavorites = async () => {
-    if (!user) return;
+    if (!isAuthenticated) return;
     try {
       await axios.post(
         `${TMDB_API_BASE_URL}/account/${user.id}/favorite?api_key=${apiKey}&session_id=${sessionId}`,
@@ -82,7 +88,7 @@ function MovieInformation() {
   };
 
   const addToWatchlist = async () => {
-    if (!user) return;
+    if (!isAuthenticated) return;
     try {
       await axios.post(
         `${TMDB_API_BASE_URL}/account/${user.id}/watchlist?api_key=${apiKey}&session_id=${sessionId}`,
