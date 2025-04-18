@@ -4,7 +4,7 @@ export default makeStyles((theme) => ({
   container: {
     display: 'flex',
     justifyContent: 'center',
-    alignItem: 'center',
+    alignItems: 'center',
   },
   button: {
     margin: '30px 2px',
