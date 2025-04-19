@@ -238,8 +238,8 @@ function MovieInformation() {
         <Grid item container style={{ marginTop: '32px' }}>
           <div className={classes.buttonsContainer}>
             {/* External Links Buttons */}
-            <Grid item xs={12} sm={6} className={classes.buttonsContainer}>
-              <ButtonGroup size="small" variant="outlined">
+            <Grid item xs={12} sm={6} className={classes.buttonsExternal}>
+              <ButtonGroup size="medium" variant="outlined">
                 <Button
                   target="_blank"
                   rel="noopener noreferrer"
@@ -262,24 +262,27 @@ function MovieInformation() {
               </ButtonGroup>
             </Grid>
 
-            {/* User Action Buttons (Favorites, Watchlist, Back) */}
-            <Grid item xs={12} sm={6} className={classes.buttonsContainer}>
+            {/* User Action Buttons (Favorites & Watchlist) */}
+            <Grid item xs={12} sm={6}>
               <ButtonGroup size="medium" variant="outlined">
-                {/* Toggle favorite state */}
-                {/* TODO: Handle logic for when signed out - consider showing alert/ prompt login */}
-                <Button onClick={addToFavorites} endIcon={isMovieFavorited ? <FavoriteBorderOutlined /> : <Favorite />}>
-                  {isMovieFavorited ? 'Unfavourite' : 'Favourite'}
-                </Button>
-                {/* Toggle watchlist state */}
-                <Button onClick={addToWatchlist} endIcon={isMovieWatchlisted ? <Remove /> : <PlusOne />}>
-                  Watchlist
-                </Button>
-                {/* Navigate back to homepage */}
-                <Button endIcon={<ArrowBack />}>
-                  <Typography style={{ textDecoration: 'none' }} component={Link} to="/" color="inherit" variant="subtitle2">
-                    Back
-                  </Typography>
-                </Button>
+                {isAuthenticated && (
+                <>
+                  {/* Toggle favorite state */}
+                  <Button
+                    onClick={addToFavorites}
+                    endIcon={isMovieFavorited ? <FavoriteBorderOutlined /> : <Favorite />}
+                  >
+                    {isMovieFavorited ? 'Unfavourite' : 'Favourite'}
+                  </Button>
+                  {/* Toggle watchlist state */}
+                  <Button
+                    onClick={addToWatchlist}
+                    endIcon={isMovieWatchlisted ? <Remove /> : <PlusOne />}
+                  >
+                    Watchlist
+                  </Button>
+                </>
+                )}
               </ButtonGroup>
             </Grid>
           </div>

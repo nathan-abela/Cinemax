@@ -56,9 +56,14 @@ export default makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     width: '100%',
-    inlineSize: 'fit-content',
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('md')]: {
       flexDirection: 'column',
+      textAlign: 'center',
+    },
+  },
+  buttonsExternal: {
+    [theme.breakpoints.down('md')]: {
+      paddingBottom: '16px',
     },
   },
   modal: {
