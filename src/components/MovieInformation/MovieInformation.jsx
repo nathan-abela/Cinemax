@@ -206,7 +206,7 @@ function MovieInformation() {
         </Typography>
 
         {/* Top Cast */}
-        <Typography variant="5h" gutterBottom>
+        <Typography variant="h6" gutterBottom>
           Top Cast
         </Typography>
         <Grid item container spacing={2}>
