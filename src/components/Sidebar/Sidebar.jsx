@@ -35,7 +35,7 @@ function Sidebar({ setMobileOpen }) {
   }, [genreIdOrCategoryName]);
 
   return (
-    <>
+    <Box className={classes.sidebar}>
       {/* Cinemax Logo - Changes based on the theme */}
       <Link to="/" className={classes.imageLink}>
         <img
@@ -82,7 +82,7 @@ function Sidebar({ setMobileOpen }) {
           </Link>
         ))}
       </List>
-    </>
+    </Box>
   );
 }
 
