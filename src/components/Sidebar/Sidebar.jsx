@@ -28,6 +28,8 @@ function Sidebar({ setMobileOpen }) {
   const { data: genresData, isFetching: isFetchingGenres } = useGetGenresQuery();
   const dispatch = useDispatch(); // To transfer data from component to Redux
 
+  const base = process.env.NODE_ENV === 'production' ? '/Cinemax' : '';
+
   const { genreIdOrCategoryName } = useSelector((state) => state.currentGenreOrCategory);
   // Close mobile menu when a category or genre is selected
   useEffect(() => {
@@ -37,7 +39,7 @@ function Sidebar({ setMobileOpen }) {
   return (
     <Box className={classes.sidebar}>
       {/* Cinemax Logo - Changes based on the theme */}
-      <Link to="/" className={classes.imageLink}>
+      <Link to={`${base}/`} className={classes.imageLink}>
         <img
           className={classes.image}
           src={theme.palette.mode === 'light' ? lightLogo : darkLogo}
@@ -51,7 +53,7 @@ function Sidebar({ setMobileOpen }) {
       <List>
         <ListSubheader>Categories</ListSubheader>
         {categories?.map(({ label, value }) => (
-          <Link key={value} className={classes.links} to="/">
+          <Link key={value} className={classes.links} to={`${base}/`}>
             <ListItem onClick={() => dispatch(selectGenreOrCategory(value))} button>
               <ListItemIcon>
                 <img src={categoryIcons[label.toLowerCase()]} className={classes.genreImage} height={30} />
@@ -72,7 +74,7 @@ function Sidebar({ setMobileOpen }) {
             <CircularProgress />
           </Box>
         ) : genresData.genres.map(({ name, id }) => (
-          <Link key={name} className={classes.links} to="/">
+          <Link key={name} className={classes.links} to={`${base}/`}>
             <ListItem onClick={() => dispatch(selectGenreOrCategory(id))} button>
               <ListItemIcon>
                 <img src={genreIcons[name.toLowerCase()]} className={classes.genreImage} height={30} />

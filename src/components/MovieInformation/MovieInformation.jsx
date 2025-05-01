@@ -25,6 +25,8 @@ function MovieInformation() {
     movie_id: id,
   }); // Fetch recommended movies
 
+  const base = process.env.NODE_ENV === 'production' ? '/Cinemax' : '';
+
   const TMDB_API_BASE_URL = 'https://api.themoviedb.org/3';
   const apiKey = process.env.REACT_APP_TMDB_KEY;
 
@@ -186,7 +188,7 @@ function MovieInformation() {
             <Link
               key={genre?.name}
               className={classes.links}
-              to="/"
+              to={`${base}/`}
               onClick={() => dispatch(selectGenreOrCategory(genre.id))}
             >
               <img src={genreIcons[genre?.name.toLowerCase()]} className={classes.genreImage} height={30} />
