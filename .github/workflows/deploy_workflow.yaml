@@ -25,7 +25,6 @@ jobs:
       - name: Build Project 🏗️
         env:
           CI: false
-          PUBLIC_URL: .
           REACT_APP_TMDB_KEY: ${{ secrets.REACT_APP_TMDB_KEY }}
           REACT_APP_ALAN_AI_KEY: ${{ secrets.REACT_APP_ALAN_AI_KEY }}
         run: npm run build
