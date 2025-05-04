@@ -78,6 +78,36 @@ To get started with Cinemax locally, follow these steps:
 
     Navigate to [http://localhost:3000](http://localhost:3000) to see the application.
 
+### Serving Production Build Locally
+
+To preview the production build of the app locally:
+
+1. **Build the app:**
+
+    ```bash
+    npm run build
+    ```
+
+2. **Serve the build locally using `serve`:**
+
+    ```bash
+    npx serve -s build
+    ```
+
+3. **Open your browser:**
+
+    Navigate to [http://localhost:5000](http://localhost:5000)
+
+4. **If deploying to a subpath (like GitHub Pages):**
+
+    Make sure your `package.json` includes the correct `homepage` field:
+
+    ```json
+    "homepage": "https://username.github.io/repository-name"
+    ```
+
+    This ensures that static assets load correctly from the proper path.
+
 ## Technologies Used
 
 - [React.js](https://react.dev)
