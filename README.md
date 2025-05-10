@@ -62,10 +62,11 @@ To get started with Cinemax locally, follow these steps:
 3. **Setup Environment Variables:**
 
     - Create a `.env` file.
-    - Obtain a free TMDB API key from [The Movie DB](https://developer.themoviedb.org) and add it to your `.env` file:
+    - Obtain a free TMDB API key from [The Movie DB](https://developer.themoviedb.org) & Alan AI SDK key from [Alan AI](https://alan.app) and add it to your `.env` file:
 
         ```env
         REACT_APP_TMDB_KEY=<your_tmdb_api_key>
+        REACT_APP_ALAN_AI_KEY=<your_alan_ai_sdk_key>
         ```
 
 4. **Start the development server:**
