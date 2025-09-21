@@ -51,14 +51,18 @@ function Sidebar({ setMobileOpen }) {
       <List>
         <ListSubheader>Categories</ListSubheader>
         {categories?.map(({ label, value }) => (
-          <Link key={value} className={classes.links} to="/">
-            <ListItem onClick={() => dispatch(selectGenreOrCategory(value))} button>
-              <ListItemIcon>
-                <img src={categoryIcons[label.toLowerCase()]} className={classes.genreImage} height={30} />
-              </ListItemIcon>
-              <ListItemText primary={label} />
-            </ListItem>
-          </Link>
+          <ListItem
+            key={value}
+            component={Link}
+            to="/"
+            className={classes.links}
+            onClick={() => dispatch(selectGenreOrCategory(value))}
+          >
+            <ListItemIcon>
+              <img src={categoryIcons[label.toLowerCase()]} className={classes.genreImage} height={30} />
+            </ListItemIcon>
+            <ListItemText primary={label} />
+          </ListItem>
         ))}
       </List>
 
@@ -72,14 +76,18 @@ function Sidebar({ setMobileOpen }) {
             <CircularProgress />
           </Box>
         ) : genresData.genres.map(({ name, id }) => (
-          <Link key={name} className={classes.links} to="/">
-            <ListItem onClick={() => dispatch(selectGenreOrCategory(id))} button>
-              <ListItemIcon>
-                <img src={genreIcons[name.toLowerCase()]} className={classes.genreImage} height={30} />
-              </ListItemIcon>
-              <ListItemText primary={name} />
-            </ListItem>
-          </Link>
+          <ListItem
+            key={name}
+            component={Link}
+            to="/"
+            className={classes.links}
+            onClick={() => dispatch(selectGenreOrCategory(id))}
+          >
+            <ListItemIcon>
+              <img src={genreIcons[name.toLowerCase()]} className={classes.genreImage} height={30} />
+            </ListItemIcon>
+            <ListItemText primary={name} />
+          </ListItem>
         ))}
       </List>
     </Box>
