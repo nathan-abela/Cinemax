@@ -156,53 +156,55 @@ function MovieInformation() {
       <Grid item container direction="column" lg={7}>
         {/* Movie Title and Tagline */}
         <Typography variant="h3" align="center" gutterBottom>
-          {data?.title} ({data.release_date.split('-')[0]})
+          {data?.title} ({data?.release_date ? data.release_date.split('-')[0] : 'N/A'})
         </Typography>
         <Typography variant="h5" align="center" gutterBottom>
-          {data?.tagline}
+          {data?.tagline || ''}
         </Typography>
 
         {/* Movie Rating, Runtime and Language */}
         <Grid item className={classes.containerSpaceAround}>
           <Box display="flex" align="center">
-            <Rating readOnly value={data.vote_average / 2} precision={0.1} />
+            <Rating readOnly value={(data?.vote_average || 0) / 2} precision={0.1} />
 
             <Typography variant="subtitle1" style={{ marginLeft: '10px' }}>
-              {data.vote_average.toFixed(1)} / 10
+              {data?.vote_average ? data.vote_average.toFixed(1) : '0.0'} / 10
             </Typography>
           </Box>
 
           <Typography variant="h6" align="center" gutterBottom>
             {data?.runtime
               ? `${Math.floor(data.runtime / 60)}h ${data.runtime % 60}m`
-              : ''} | {' '}
-            {data?.spoken_languages[0]?.name}
+              : 'Runtime N/A'} | {' '}
+            {data?.spoken_languages?.[0]?.name || 'Language N/A'}
           </Typography>
         </Grid>
 
         {/* Movie Genres */}
-        <Grid item className={classes.genresContainer}>
-          {data?.genres?.map((genre) => (
-            <Link
-              key={genre?.name}
-              className={classes.links}
-              to="/"
-              onClick={() => dispatch(selectGenreOrCategory(genre.id))}
-            >
-              <img src={genreIcons[genre?.name.toLowerCase()]} className={classes.genreImage} height={30} />
-              <Typography color="textPrimary" variant="subtitle1">
-                {genre?.name}
-              </Typography>
-            </Link>
-          ))}
-        </Grid>
+        {data?.genres && data.genres.length > 0 && (
+          <Grid item className={classes.genresContainer}>
+            {data.genres.map((genre) => (
+              <Link
+                key={genre?.name}
+                className={classes.links}
+                to="/"
+                onClick={() => dispatch(selectGenreOrCategory(genre.id))}
+              >
+                <img src={genreIcons[genre?.name.toLowerCase()]} className={classes.genreImage} height={30} />
+                <Typography color="textPrimary" variant="subtitle1">
+                  {genre?.name}
+                </Typography>
+              </Link>
+            ))}
+          </Grid>
+        )}
 
         {/* Movie Overview */}
         <Typography variant="h5" gutterBottom style={{ marginTop: '10px' }}>
           Overview
         </Typography>
         <Typography style={{ marginBottom: '32px' }}>
-          {data?.overview}
+          {data?.overview || 'No overview available for this movie.'}
         </Typography>
 
         {/* Top Cast */}
@@ -210,28 +212,34 @@ function MovieInformation() {
           Top Cast
         </Typography>
         <Grid item container spacing={2}>
-          {data && data.credits?.cast?.map((character, i) => (
-            character.profile_path && (
-              <Grid
-                key={i}
-                item
-                xs={4}
-                md={2}
-                component={Link}
-                to={`/actors/${character.id}`}
-                style={{ textDecoration: 'none' }}
-              >
-                <img
-                  className={classes.castImage}
-                  src={`https://image.tmdb.org/t/p/w500/${character.profile_path}`}
-                  alt={character.name}
-                />
-                <Typography color="textPrimary">{character?.name}</Typography>
-                {/* Show only the first actor name if multiple are provided */}
-                <Typography color="textSecondary">{character?.character.split('/')[0]}</Typography>
-              </Grid>
-            )
-          )).slice(0, 6)}
+          {data?.credits?.cast && data.credits.cast.length > 0 ? (
+            data.credits.cast.map((character, i) => (
+              character.profile_path && (
+                <Grid
+                  key={i}
+                  item
+                  xs={4}
+                  md={2}
+                  component={Link}
+                  to={`/actors/${character.id}`}
+                  style={{ textDecoration: 'none' }}
+                >
+                  <img
+                    className={classes.castImage}
+                    src={`https://image.tmdb.org/t/p/w500/${character.profile_path}`}
+                    alt={character.name}
+                  />
+                  <Typography color="textPrimary">{character?.name}</Typography>
+                  {/* Show only the first actor name if multiple are provided */}
+                  <Typography color="textSecondary">{character?.character?.split('/')[0]}</Typography>
+                </Grid>
+              )
+            )).slice(0, 6)
+          ) : (
+            <Typography color="textSecondary" style={{ marginLeft: '16px' }}>
+              No cast information available
+            </Typography>
+          )}
         </Grid>
 
         {/* Buttons */}
@@ -245,6 +253,7 @@ function MovieInformation() {
                   rel="noopener noreferrer"
                   href={data?.homepage}
                   endIcon={<Language />}
+                  disabled={!data?.homepage}
                 >
                   Website
                 </Button>
@@ -253,10 +262,15 @@ function MovieInformation() {
                   rel="noopener noreferrer"
                   href={`https://www.imdb.com/title/${data?.imdb_id}`}
                   endIcon={<MovieIcon />}
+                  disabled={!data?.imdb_id}
                 >
                   IMDB
                 </Button>
-                <Button onClick={() => setOpen(true)} endIcon={<Theaters />}>
+                <Button
+                  onClick={() => setOpen(true)}
+                  endIcon={<Theaters />}
+                  disabled={!trailer}
+                >
                   Trailer
                 </Button>
               </ButtonGroup>
