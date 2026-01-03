@@ -35,7 +35,7 @@ function Profile() {
   // Logs out the user by clearing local storage and redirecting to the home page.
   const logOut = () => {
     localStorage.clear();
-    window.location.href = '/';
+    window.location.href = `${process.env.PUBLIC_URL}/`;
   };
 
   return (

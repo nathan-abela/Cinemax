@@ -33,7 +33,7 @@ const useAlan = () => {
 
           case 'logout':
             localStorage.clear();
-            window.location.href = '/';
+            window.location.href = `${process.env.PUBLIC_URL}/`;
             break;
 
           case 'search':
