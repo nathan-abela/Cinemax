@@ -7,12 +7,20 @@
   <meta name="theme-color" content="#000000" />
   <meta name="description" content="Web site created using create-react-app" />
 
-  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <link rel="icon" href="/Cinemax/favicon.ico" />
+  <link rel="apple-touch-icon" href="/Cinemax/logo192.png" />
+  <link rel="manifest" href="/Cinemax/manifest.json" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
 
   <title>Cinemax</title>
+
+  <!-- GitHub Pages SPA redirect script -->
+  <script>
+    // Redirect to index.html with the path stored in sessionStorage
+    // so the React Router can handle the route
+    sessionStorage.setItem('redirect', window.location.href);
+    window.location.replace('/Cinemax/');
+  </script>
 </head>
 
 <body>
