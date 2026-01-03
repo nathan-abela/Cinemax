@@ -327,23 +327,23 @@ function MovieInformation() {
       </Box>
 
       {/* Movie Trailer */}
-      <Modal
-        closeAfterTransition
-        className={classes.modal}
-        open={open}
-        onClose={() => setOpen(false)}
-      >
-        {trailer && (
-        <iframe
-          autoPlay
-          allow="autoplay"
-          allowFullScreen
-          className={classes.video}
-          title="Trailer"
-          src={`https://www.youtube.com/embed/${trailer.key}?autoplay=1`}
-        />
-        )}
-      </Modal>
+      {trailer && (
+        <Modal
+          closeAfterTransition
+          className={classes.modal}
+          open={open}
+          onClose={() => setOpen(false)}
+        >
+          <iframe
+            autoPlay
+            allow="autoplay"
+            allowFullScreen
+            className={classes.video}
+            title="Trailer"
+            src={`https://www.youtube.com/embed/${trailer.key}?autoplay=1`}
+          />
+        </Modal>
+      )}
     </Grid>
   );
 }
